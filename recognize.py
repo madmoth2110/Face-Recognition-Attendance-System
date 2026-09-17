@@ -2,6 +2,7 @@ import cv2
 import csv
 from datetime import datetime
 import os
+import json
 
 attendance_file = "attendance.csv"
 
@@ -30,10 +31,12 @@ def mark_attendance(name):
     print(f"Attendance marked: {name} | {today} | {current_time}")
 
 
-names = {
-    0: "Hema",
-    1: "Nisha"
-}
+# Load employee names
+with open("names.json", "r") as file:
+    names = json.load(file)
+
+# JSON keys are strings, so convert them to integers
+names = {int(key): value for key, value in names.items()}
 
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -121,7 +124,7 @@ while True:
         frame
     )
 
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(1) & 0xFF
 
     if key == 27:
         break
