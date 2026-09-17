@@ -56,4 +56,6 @@ python gui.py
 This project is created for learning and demonstration purposes.
 
 Real employee face images and attendance records should not be uploaded to a public repository because they contain personal data.
-![Face Recognition System](./screenshot%202026-09-17%20223247.png)
+## Project Screenshot
+
+![Face Recognition System](./screenshot.png)
