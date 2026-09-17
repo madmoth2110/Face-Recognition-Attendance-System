@@ -1,0 +1,5 @@
+attendance.csv
+employees/
+trainer.yml
+**pycache**/
+*.pyc
