@@ -1,4 +1,5 @@
 import cv2
+from deepface import DeepFace
 import csv
 from datetime import datetime
 import os
@@ -70,6 +71,18 @@ while True:
 
     for (x, y, w, h) in faces:
 
+        try:
+            result = DeepFace.analyze(
+                frame,
+                actions=["emotion"],
+                enforce_detection=False
+            )
+
+            emotion = result[0]["dominant_emotion"]
+
+        except:
+            emotion = "Unknown"
+
         face_roi = gray[y:y+h, x:x+w]
 
         id_, confidence = recognizer.predict(face_roi)
@@ -85,7 +98,8 @@ while True:
             color = (0, 0, 255)
 
         print(
-            f"Name: {name} | ID: {id_} | Confidence: {confidence:.2f}"
+            f"Name: {name} | Emotion: {emotion} | "
+            f"Confidence: {confidence:.2f}"
         )
 
         cv2.rectangle(
@@ -108,10 +122,20 @@ while True:
 
         cv2.putText(
             frame,
-            f"{confidence:.0f}",
+            f"Emotion: {emotion}",
             (x, y + h + 25),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
+            color,
+            2
+        )
+
+        cv2.putText(
+            frame,
+            f"Confidence: {confidence:.0f}",
+            (x, y + h + 50),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
             color,
             2
         )
@@ -121,7 +145,7 @@ while True:
         frame
     )
 
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(1) & 0xFF
 
     if key == 27:
         break
