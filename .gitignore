@@ -1,0 +1,13 @@
+# Face data
+employees/
+trainer.yml
+names.json
+attendance.csv
+
+# Camera generated images
+alert_*.jpg
+motion_*.jpg
+
+# Python cache
+__pycache__/
+*.pyc
